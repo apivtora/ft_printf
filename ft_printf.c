@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/18 10:15:17 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/01 16:52:53 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/04 14:48:54 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,24 @@ void ft_types(va_list argptr, char form, t_flags *flags)
 		flags->line = va_arg(argptr, char*);
 		flags->type = 's';
 	}
+	else if (form == 'S')
+	{
+		flags->line2 = va_arg(argptr, wchar_t*);
+		flags->type = 'C';
+	}
 	else if (form == 'c')
 	{
-		flags->line = ft_memalloc(2);
+		flags->line = ft_memalloc(5);
 		flags->line[0] = va_arg(argptr, int);
 		flags->type = 's';
 	}
+	else if (form == 'C')
+	{
+		flags->line = ft_memalloc(5);
+		flags->line[0] = va_arg(argptr, wchar_t);
+		flags->type = 'C';
+	}
+
 }
 
 int ft_ifflag(char f)// можно заменить одним if
@@ -133,7 +145,7 @@ int ft_printf(const char *format, ...)
 				flags->type = 's';
 			}
 		}
-		if (flags->line)
+		if (flags->line || flags->line2)
 			{
 				ft_flags_imp(flags);
 				r_nbr = r_nbr + ft_print(flags);

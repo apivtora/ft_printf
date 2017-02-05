@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/27 10:12:20 by apivtora          #+#    #+#             */
-/*   Updated: 2017/01/30 16:14:52 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/04 11:00:26 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,10 @@ void ft_all_d(t_flags *flags, char c, va_list argptr)
 		flags->line  = ft_llitoua_base(ubuf, 8);
 	else if (c == 'x'|| c == 'X')
 		flags->line  = ft_llitoua_base(ubuf, 16);
-	while (flags->line[i] && c == 'X')
+	while (flags->line[i] != '\0' && c == 'X')
 	{
-		flags->line[i] = ft_toupper(flags->line[i]);
+		if (flags->line[i] >= 'a'  && flags->line[i] <= 'z')
+			flags->line[i] = flags->line[i] - 32;
 		i++;
 	}
 	flags->type = 'd';

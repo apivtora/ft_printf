@@ -22,6 +22,6 @@ $(NAME):
 
 clean:
 	rm  -rf *.o && rm -rf  libft/*.o
-
 fclean: clean
 	rm -rf libftprintf.a  && rm -rf libft/libft.a
+re: fclean all

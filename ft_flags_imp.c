@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/20 20:29:29 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/01 12:17:05 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/04 16:25:51 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,16 @@ void ft_flags_imp(t_flags *flags)
 	i = 0;
 	if (flags->plus || flags->sign == '-')
 		flags->space = 0;
+	if (flags->line)
+		i = ft_strlen(flags->line);
+	else
+		i = ft_wstrsize(flags->line2);
 	if  (flags->minus || (flags->dot && flags->type == 'd'))
 		flags->zero = 0;
-	else if (flags->dot && flags->type == 's')
-	{
-		buf = ft_memalloc(flags->dot + 1);
-		flags->line = ft_strncpy(buf, flags->line, flags->dot);
-	}
-	while (flags->line[i])
-		i++;
+	else if (flags->dot && flags->type == 's' && flags->dot < i)
+		i = flags->dot;
+	else if (flags->dot && flags->type == 'C')
+		i = ft_count_len(flags);
 	if (flags->num - i > 0)
 		flags->line_pre = ft_zero(flags, i);
 	if(flags->minus)

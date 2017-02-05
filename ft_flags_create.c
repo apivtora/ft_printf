@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/20 14:58:49 by apivtora          #+#    #+#             */
-/*   Updated: 2017/01/30 15:22:34 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/04 14:47:20 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_flags *ft_flags_create(t_flags *flags)
 	flags->size[1] = '\0';
 	flags->sign = '+';
 	flags->line = NULL;
+	flags->line2 = NULL;
 	flags->line_pre = NULL;
 	flags->line_post = NULL;
 	flags->letter = '\0';
