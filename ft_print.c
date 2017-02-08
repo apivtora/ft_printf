@@ -6,8 +6,8 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 10:15:49 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/05 10:47:33 by apivtora         ###   ########.fr       */
-/*                                                                            */
+/*   Updated: 2017/02/08 12:04:53 by apivtora         ###   ########.fr       */
+	/*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
@@ -26,14 +26,25 @@ int ft_print(t_flags *flags)
 		ret = ret + write (1, " " , 1);
 	if ( !flags->zero && flags->line_pre)
 		ret = ret + ft_putstr(flags->line_pre);
-	if ((flags->plus || flags->sign == '-') && (flags->letter == 'd' || flags->letter == 'D'))//*2
-		ret = ret + write(1, &flags->sign, 1);
-	else if (flags->hash && (flags->letter == 'o' || flags->letter == 'O'))
-		ret = ret + write(1, "0", 1);
-	else if (flags->hash && (flags->letter == 'x'))
-		ret = ret + write(1, "0x", 2);
-	else if (flags->hash && (flags->letter == 'X'))
-		ret = ret + write(1, "0X", 2);
+	if (flags->line)
+	{
+		if ((flags->plus || flags->sign == '-') && (flags->letter == 'd' || flags->letter == 'D' || flags->letter == 'i'))//*2
+			ret = ret + write(1, &flags->sign, 1);
+		else if ((flags->line[0] != '0' && flags->line[0]) || flags->letter == 'p')
+		{
+			if (flags->hash && (flags->letter == 'o' || flags->letter == 'O'))
+			{
+				ret = ret + write(1, "0", 1);
+				nbr++;
+			}
+			else if (flags->hash && (flags->letter == 'x' || flags->letter == 'p'))
+				ret = ret + write(1, "0x", 2);
+			else if (flags->hash && (flags->letter == 'X'))
+				ret = ret + write(1, "0X", 2);
+		}
+		else if (flags->line[0] == 0 && (flags->letter == 'o' || flags->letter == 'O') && flags->hash)
+			ret = ret + write(1, "0", 1); // возможно можно убрать
+	}
 	if ( flags->zero && flags->line_pre)
 		ret = ret + ft_putstr(flags->line_pre);
 	if (flags->dot - nbr > 0 && flags->type == 'd')
@@ -44,12 +55,13 @@ int ft_print(t_flags *flags)
 			nbr++;
 		}
 	}
-	if (flags->dot && flags->dot < nbr  && flags->type == 's')
+	if (flags->dot >= 0 && flags->dot< nbr && ft_if_type(flags->letter) && flags->type == 's')
 		ret = ret + write(1, flags->line, flags->dot);
 	else
 		ret = ret + ft_putstr(flags->line);
-//	else
-	if  (flags->type == 'C' && flags->dot)
+	if ((flags->letter == 'c' && flags->line[0] == 0) || (flags->letter == 'C' && flags->line2[0] == 0))
+			ret = ret + write(1, "\0",1);
+	if  (flags->type == 'C' && (flags->dot >= 0))
 		ret = ret + ft_put_w(flags);
 	else if (flags->type == 'C')
 		ret = ret + ft_putstr_u(flags->line2);

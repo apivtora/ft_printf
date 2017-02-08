@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/20 20:29:29 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/04 16:25:51 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/06 14:07:19 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char *ft_zero(t_flags *flags, int nbr)
 		nbr = flags->dot;
 	if (flags->zero)
 		symb = '0';
-	if (flags->hash && (flags->letter == 'x' || flags->letter == 'X'))
+	if (flags->hash && (flags->letter == 'x' || flags->letter == 'X' || flags->letter == 'p'))
 		nbr = nbr + 2;
 	if (flags->space && flags->type != 's')                            ////////
 		nbr++;                                   ////////поправить на норм вывод
@@ -49,18 +49,20 @@ void ft_flags_imp(t_flags *flags)
 	char *buf;
 
 	i = 0;
-	if (flags->plus || flags->sign == '-')
+	if (flags->plus || flags->sign == '-' || flags->letter == 'u' || flags->letter == 'U' || flags->letter == 'x' || flags->letter == 'X' || flags->letter == 'o' || flags->letter == 'O' || flags->letter == 'p') // сделать отдельный тип о_0?
 		flags->space = 0;
 	if (flags->line)
 		i = ft_strlen(flags->line);
 	else
 		i = ft_wstrsize(flags->line2);
-	if  (flags->minus || (flags->dot && flags->type == 'd'))
+	if  (flags->minus || ((flags->dot >= 0 ) && flags->type == 'd'))
 		flags->zero = 0;
-	else if (flags->dot && flags->type == 's' && flags->dot < i)
+	if ((flags->dot >= 0) && flags->type == 's' && flags->dot < i)
 		i = flags->dot;
-	else if (flags->dot && flags->type == 'C')
+	else if ((flags->dot >= 0) && flags->type == 'C')
 		i = ft_count_len(flags);
+	if ((flags->letter == 'c' && flags->line[0] == 0) || (flags->letter == 'C' && flags->line2[0] == 0))
+	i++;
 	if (flags->num - i > 0)
 		flags->line_pre = ft_zero(flags, i);
 	if(flags->minus)

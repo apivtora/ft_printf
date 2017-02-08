@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/25 15:51:40 by apivtora          #+#    #+#             */
-/*   Updated: 2017/01/30 15:23:00 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/05 15:12:21 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int ft_if_type(char c)
 
 int ft_if_digital(char c)
 {
-	if (c == 'd' || c == 'D' || c == 'u' || c == 'U' || c == 'o' || c == 'O' ||
+	if (c == 'd' || c == 'i' || c == 'D' || c == 'u' || c == 'U' || c == 'o' || c == 'O' ||
 			c == 'x' || c == 'X')
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/18 10:15:17 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/04 14:48:54 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/08 11:52:45 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,29 @@ void ft_types(va_list argptr, char form, t_flags *flags)
 	{
 		flags->hash = 1;
 		flags->size[0] = 'l';
-		flags->letter ='x';
 		ft_all_d(flags, 'x' , argptr); ///
 	}
 	else if (ft_if_digital(form))
 		ft_all_d(flags, form , argptr);
+	else if (form == 'S' || (flags->size[0] == 'l' && form == 's'))
+	{
+		flags->line2 = va_arg(argptr, wchar_t*);
+		flags->type = 'C';
+		if (!(flags->line2))
+			flags->line2 = L"(null)";
+	}
 	else if (form == 's')
 	{
 		flags->line = va_arg(argptr, char*);
 		flags->type = 's';
+		if (!(flags->line))
+			flags->line = "(null)";
 	}
-	else if (form == 'S')
+	else if (form == 'C' || (flags->size[0] == 'l' && form == 'c'))
 	{
-		flags->line2 = va_arg(argptr, wchar_t*);
+		flags->line2 = ft_memalloc(5);
+		flags->letter = 'C';
+		flags->line2[0] = va_arg(argptr, wchar_t);
 		flags->type = 'C';
 	}
 	else if (form == 'c')
@@ -41,19 +51,13 @@ void ft_types(va_list argptr, char form, t_flags *flags)
 		flags->line[0] = va_arg(argptr, int);
 		flags->type = 's';
 	}
-	else if (form == 'C')
-	{
-		flags->line = ft_memalloc(5);
-		flags->line[0] = va_arg(argptr, wchar_t);
-		flags->type = 'C';
-	}
 
 }
 
 int ft_ifflag(char f)// можно заменить одним if
 {
 	int i;
-	char *flags = "+-#0. 123456789lhjz";
+	char *flags = "+-#0. 123456789lhjz*";
 
 	i = 0;
 	while (flags[i])
@@ -65,7 +69,7 @@ int ft_ifflag(char f)// можно заменить одним if
 	return (0);
 }
 
-int ft_flags_read(const char *format, t_flags *flags)
+int ft_flags_read(const char *format, t_flags *flags, va_list argptr)
 {
 	int i;
 
@@ -85,14 +89,28 @@ int ft_flags_read(const char *format, t_flags *flags)
 		else if (format[i] == '.')
 		{
 			flags->dot = ft_atoi((char *)(format + i + 1));////////////////
-			while (format[i+1] >= '0' && format[i+1] <= '9')
+			while (format[i + 1] >= '0' && format[i + 1] <= '9')
 				i++;
+			if (format[i + 1] == '*')
+			{
+				flags->dot = va_arg(argptr, int);
+				i++;
+			}
 		}
 		else if (format[i] > '0' && format[i] <= '9')
 		{
 			flags->num = ft_atoi((char *)(format + i));////////////////
 			while (format[i+1] >= '0' && format[i+1] <= '9')
 				i++;
+		}
+		else if (format[i] == '*')
+		{
+			flags->num = va_arg(argptr, int);
+			if (flags->num < 0)
+			{
+				flags->minus = 1;
+			flags->num *= -1;
+			}
 		}
 		else if (format[i] == 'l' && flags->size[0] != 'z')
 		{
@@ -136,13 +154,14 @@ int ft_printf(const char *format, ...)
 		if (format[i] == '%')
 		{
 			flags = ft_flags_create(flags);
-			i = i + ft_flags_read(format + i, flags);
+			i = i + ft_flags_read(format + i, flags, argptr);
 			ft_types(argptr, format[i], flags);
 			if ( !(ft_if_type(format[i])) && format[i])
 			{
 				flags->line = ft_memalloc(2);
 				flags->line[0] = format[i];
 				flags->type = 's';
+				flags->dot = 1;
 			}
 		}
 		if (flags->line || flags->line2)
