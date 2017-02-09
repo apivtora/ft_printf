@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/18 10:15:17 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/08 11:52:45 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/08 13:36:58 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void ft_types(va_list argptr, char form, t_flags *flags)
 int ft_ifflag(char f)// можно заменить одним if
 {
 	int i;
-	char *flags = "+-#0. 123456789lhjz*";
+	char *flags = "+-#0. 123456789lhjz*k";
 
 	i = 0;
 	while (flags[i])
@@ -130,6 +130,11 @@ int ft_flags_read(const char *format, t_flags *flags, va_list argptr)
 				flags->size[0] = 'j';
 		else if (format[i] == 'z')
 				flags->size[0] = 'z';
+		else if (format[i] == 'k' && format[i + 1] >= '0' && format[i + 1] <= '9')
+		{
+			flags->color = format[i + 1];
+			i++;
+		}
 		i++;
 	}
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/21 10:15:49 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/08 12:04:53 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/08 15:17:27 by apivtora         ###   ########.fr       */
 	/*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int ft_print(t_flags *flags)
 	int ret;
 	int nbr;
 
+	if (flags->color)
+		ft_color(flags->color);
 	if (flags->type == 'C')
 		nbr = ft_wstrsize(flags->line2);
 	else
@@ -67,6 +69,8 @@ int ft_print(t_flags *flags)
 		ret = ret + ft_putstr_u(flags->line2);
 	if (flags->line_post)
 		ret = ret + ft_putstr(flags->line_post);
+	if (flags->color)
+		write (1, "\x1b[0m", 4);
 	flags->line = NULL;
 	flags->line2 = NULL;
 	return (ret);

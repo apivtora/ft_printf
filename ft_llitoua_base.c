@@ -1,35 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wstrsize.c                                      :+:      :+:    :+:   */
+/*   ft_llitoua_base.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/03 12:27:11 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/08 15:48:40 by apivtora         ###   ########.fr       */
+/*   Created: 2017/01/25 17:43:00 by apivtora          #+#    #+#             */
+/*   Updated: 2017/02/09 12:41:44 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_wstrsize(wchar_t *w_str)
+static char ft_numb(int numb)
+{
+	char new[] = "0123456789abcdef";
+	return (new[numb]);
+}
+
+char	*ft_llitoua_base(uintmax_t value, int base)
 {
 	int i;
-	int size;
+	int j;
+	char rev[100];
+	char *final;
 
 	i = 0;
-	size = 0;
-	while (w_str[i])
+	while (value / base != 0)
 	{
-		if (w_str[i] < 128)
-			size = size + 1;
-		else if (w_str[i] > 127 && w_str[i] < 0x0800)
-			size = size + 2;
-		else if ((w_str[i] > 0x07ff) && w_str[i] < 0x10000)
-			size = size + 3;
-		else if (w_str[i] > 0xFFFF && w_str[i] < 110000)
-			size = size + 4;
+		rev[i] = ft_numb((value % base));
+		value = (value / base);
 		i++;
 	}
-	return (size);
+	rev[i] = ft_numb((value % base));
+	final = (char*)malloc(100);
+	j = 0;
+	while (i >= 0)
+	{
+		final[j] = rev[i];
+		i--;
+		j++;
+	}
+	final[j] = '\0';
+	return (final);
 }

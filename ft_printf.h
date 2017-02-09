@@ -6,16 +6,17 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/20 13:12:31 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/04 16:44:54 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/09 12:40:02 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 #include <stdarg.h>
-#include "libft/libft.h"
 #include <limits.h>
-
+# include <string.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef struct	s_flags
 {
@@ -34,6 +35,7 @@ typedef struct	s_flags
 	char		size[2];
 	char		letter;
 	wchar_t		*line2;
+	char		color;
 }				t_flags;
 t_flags			*ft_flags_create(t_flags *flags);
 void			ft_flags_imp(t_flags *flags);
@@ -48,5 +50,13 @@ int				ft_wstrsize(wchar_t *w_str);
 int				ft_count_len(t_flags *flags);
 int				ft_size_u(wchar_t c);
 int				ft_put_w(t_flags *flags);
+void			ft_color(int a);
+int				ft_if_u(t_flags *flags);
+int	ft_atoi(const char *str);
+char	*ft_llitoua_base(uintmax_t value, int base);
+void	*ft_memalloc(size_t size);
+int	ft_putstr(const char *str);
+char				*ft_ullitoa(unsigned long long n);
+int	ft_strlen(const char *str);
 
 #endif

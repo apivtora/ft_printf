@@ -6,13 +6,13 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/04 16:06:05 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/04 16:29:59 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/08 15:31:18 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_count_len(t_flags *flags)
+int	ft_count_len(t_flags *flags)
 {
 	int i;
 	int size;
@@ -28,5 +28,5 @@ int ft_count_len(t_flags *flags)
 		size = size + temp;
 		i++;
 	}
-	return(size);
+	return (size);
 }

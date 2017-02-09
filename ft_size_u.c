@@ -6,17 +6,17 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/04 15:59:52 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/04 16:26:24 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/08 15:50:45 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_size_u(wchar_t c)
+int	ft_size_u(wchar_t c)
 {
 	if (c < 128)
 		return (1);
-	else if (c > 127  && c < 0x0800)
+	else if (c > 127 && c < 0x0800)
 		return (2);
 	else if ((c > 0x07ff) && c < 0x10000)
 		return (3);

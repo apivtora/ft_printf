@@ -6,15 +6,14 @@
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/20 14:58:49 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/05 12:14:31 by apivtora         ###   ########.fr       */
+/*   Updated: 2017/02/08 15:51:50 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_flags *ft_flags_create(t_flags *flags)
+t_flags	*ft_flags_create(t_flags *flags)
 {
-
 	if (!flags)
 		flags = (t_flags*)malloc(sizeof(*flags));
 	flags->minus = 0;
@@ -32,5 +31,6 @@ t_flags *ft_flags_create(t_flags *flags)
 	flags->line_pre = NULL;
 	flags->line_post = NULL;
 	flags->letter = '\0';
-	return(flags);
+	flags->color = 0;
+	return (flags);
 }

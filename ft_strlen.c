@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_wstrsize.c                                      :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apivtora <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/02/03 12:27:11 by apivtora          #+#    #+#             */
-/*   Updated: 2017/02/08 15:48:40 by apivtora         ###   ########.fr       */
+/*   Created: 2016/10/28 11:57:55 by apivtora          #+#    #+#             */
+/*   Updated: 2016/12/04 13:05:13 by apivtora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-int	ft_wstrsize(wchar_t *w_str)
+int	ft_strlen(const char *str)
 {
-	int i;
-	int size;
+	int n;
 
-	i = 0;
-	size = 0;
-	while (w_str[i])
+	n = 0;
+	while (str[n] != '\0')
 	{
-		if (w_str[i] < 128)
-			size = size + 1;
-		else if (w_str[i] > 127 && w_str[i] < 0x0800)
-			size = size + 2;
-		else if ((w_str[i] > 0x07ff) && w_str[i] < 0x10000)
-			size = size + 3;
-		else if (w_str[i] > 0xFFFF && w_str[i] < 110000)
-			size = size + 4;
-		i++;
+		n++;
 	}
-	return (size);
+	return (n);
 }
